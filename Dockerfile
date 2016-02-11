@@ -1,4 +1,4 @@
-FROM qnib/alpn-terminal
+FROM qnib/alpn-openmpi
 
 RUN apk update && apk upgrade && \
     apk add openssh && \
