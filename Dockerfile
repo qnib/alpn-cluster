@@ -3,7 +3,6 @@ FROM qnib/alpn-openmpi
 ADD ssh/ /root/.ssh/
 RUN apk update && apk upgrade && \
     apk add sed openssh && \
-    ln -s /etc/init.d/sshd /etc/runlevels/default/ && \
     sed -i -e 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config && \
     sed -i -e 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     ####### Highly unsecure... !1!! ###########
@@ -26,5 +25,7 @@ RUN apk update && apk upgrade && \
     sed -i -e 's#^root.*#root:x:0:0:root:/root:/bin/bash#' /etc/passwd && \ 
     apk del sed && \
     rm -rf /var/cache/apk/*
+ADD etc/supervisord.d/sshd.ini /etc/supervisord.d/
+ADD opt/qnib/sshd/bin/start.sh /opt/qnib/sshd/bin/
     
 
